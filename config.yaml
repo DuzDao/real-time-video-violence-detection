@@ -1,2 +1,3 @@
 bootstrap_servers: localhost:9092
 topic: test
+interval: 0.2

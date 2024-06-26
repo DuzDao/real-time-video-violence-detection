@@ -34,7 +34,7 @@ class VideoProducer:
         ----------
         `mp4_path`: str     | [Path of mp4 video]
         """
-        video = cv2.VideoCapture(mp4_path)
+        video = cv2.VideoCapture(mp4_path, cv2.CAP_DSHOW)
         
         while video.isOpened():
             success, frame = video.read()
