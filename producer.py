@@ -1,6 +1,6 @@
 import yaml
 import argparse
-from kafka_services.video_producer import VideoProducer
+from kafka_utils.video_producer import VideoProducer
 
 def main(args):
     with open(args.config) as conf_file:
