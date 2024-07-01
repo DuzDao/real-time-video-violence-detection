@@ -5,9 +5,10 @@ from skimage.transform import resize
 from tqdm import tqdm
 
 from violence_detector.image_model import ViolenceDetector
+from violence_detector.audio_model import AudioViolenceDetector
 
 class VideoConsumer:
-    def __init__(self, config):
+    def __init__(self, config, mp4_path):
         self.consumer = KafkaConsumer(
             config["topic"], 
             bootstrap_servers = [config["bootstrap_servers"]])
@@ -16,6 +17,11 @@ class VideoConsumer:
         self.model = ViolenceDetector(config).get_model()
         self.all_frames = []
         self.num_frames_to_predict = config["num_frames_to_predict"]
+        
+        # Get assemblyai to detect violence in audio
+        self.audio_detector = AudioViolenceDetector(config)
+
+        self.mp4_path = mp4_path
 
     def process_frame(self, frame):
         """
@@ -35,6 +41,7 @@ class VideoConsumer:
 
     def detect_violence(self, threshold=0.9):
         """
+        Detect violence through video (frames).
         ----------
         num_frames_to_predict: int  | [Number of frames will pass into the model to get prediction].
         threshold: float            | [The accuracy the model must achieve if it considers the video to be violent]
@@ -57,3 +64,9 @@ class VideoConsumer:
                     break
                 else:
                     print(prediction[0][1])
+
+    def detect_hate_speech(self):
+        hate_speechs = self.audio_detector.get_hate_speech(self.mp4_path)
+        print("Những ngôn từ bạo lực xuất hiện trong video: \n")
+        for hate_speech in hate_speechs:
+            print(hate_speech[0])

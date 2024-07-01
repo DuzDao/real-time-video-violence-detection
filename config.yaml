@@ -3,3 +3,4 @@ topic: test
 interval: 0.2
 pretrained_weight_path: D:\HK6\DS200\Project\src\real-time-video-violence-detection\pretrained_weight\mamonbest947oscombo-drive.hdfs
 num_frames_to_predict: 120
+assembly_api_key: d3741df9891d4e59b8a17fb0039414ac
