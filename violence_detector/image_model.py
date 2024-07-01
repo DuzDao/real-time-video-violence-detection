@@ -33,6 +33,7 @@ class ViolenceDetector:
         """
         Get the model with the weight loaded from pretrained weight
         """
+        print("Loading model for violence detector...")
         np.random.seed(1234)
 
         base_model = self.vg19(include_top=False,weights='imagenet',input_shape=(160, 160,3))
